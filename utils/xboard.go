@@ -2,8 +2,6 @@ package utils
 
 import (
 	"fmt"
-	inpututils "local/input-utils"
-	stringutils "local/string-utils"
 	"strconv"
 	"strings"
 	"time"
@@ -161,7 +159,7 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 			}
 		}
 
-		command, _ = inpututils.GetInput("")
+		command, _ = GetInput("")
 		if len(command) < 2 {
 			continue
 		}
@@ -185,24 +183,24 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 		}
 
 		if strings.Contains(command, "sd") {
-			depthStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "sd ")
-			depthStr2 := stringutils.RemoveStringToTheRightOfMarker(depthStr1, " ")
+			depthStr1 := RemoveStringToTheLeftOfMarker(command, "sd ")
+			depthStr2 := RemoveStringToTheRightOfMarker(depthStr1, " ")
 			depth, _ = strconv.Atoi(depthStr2)
 			fmt.Printf("DEBUG depth: %d\n", depth)
 			continue
 		}
 
 		if strings.Contains(command, "st") {
-			moveTimeStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "st ")
-			moveTimeStr2 := stringutils.RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
+			moveTimeStr1 := RemoveStringToTheLeftOfMarker(command, "st ")
+			moveTimeStr2 := RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
 			moveTime, _ = strconv.Atoi(moveTimeStr2)
 			fmt.Printf("DEBUG movetime: %d\n", moveTime)
 			continue
 		}
 
 		if strings.Contains(command, "time") {
-			timeIntStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "time ")
-			timeIntStr2 := stringutils.RemoveStringToTheRightOfMarker(timeIntStr1, " ")
+			timeIntStr1 := RemoveStringToTheLeftOfMarker(command, "time ")
+			timeIntStr2 := RemoveStringToTheRightOfMarker(timeIntStr1, " ")
 			timeInt, _ = strconv.Atoi(timeIntStr2)
 			timeInt *= 10
 			fmt.Printf("DEBUG time:%d\n", timeInt)
@@ -211,7 +209,7 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 		if strings.Contains(command, "level") {
 			seconds = 0
 			moveTime = -1
-			inputStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "level ")
+			inputStr1 := RemoveStringToTheLeftOfMarker(command, "level ")
 			inputStrSlice := strings.Split(inputStr1, " ")
 			if len(inputStrSlice) != 3 {
 				fmt.Println(command)
@@ -251,8 +249,8 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 
 		// the protocol might send ping 3 and we need to reply with pong 3
 		if strings.Contains(command, "ping") {
-			pingStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "ping ")
-			pingStr2 := stringutils.RemoveStringToTheRightOfMarker(pingStr1, " ")
+			pingStr1 := RemoveStringToTheLeftOfMarker(command, "ping ")
+			pingStr2 := RemoveStringToTheRightOfMarker(pingStr1, " ")
 			pingNum, _ := strconv.Atoi(pingStr2)
 			fmt.Printf("pong %d\n", pingNum)
 			continue
@@ -268,7 +266,7 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 		if strings.Contains(command, "setboard") {
 			engineSide = Both
 			startStr := "setboard "
-			fen := stringutils.RemoveStringToTheLeftOfMarker(command, startStr)
+			fen := RemoveStringToTheLeftOfMarker(command, startStr)
 			ParseFen(fen, pos)
 			continue
 		}
@@ -280,8 +278,8 @@ func XBoardLoop(pos *Board, info *SearchInfo) {
 
 		if strings.Contains(command, "usermove") {
 			movesToGo[pos.side]--
-			moveStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "usermove ")
-			moveStr2 := stringutils.RemoveStringToTheRightOfMarker(moveStr1, " ")
+			moveStr1 := RemoveStringToTheLeftOfMarker(command, "usermove ")
+			moveStr2 := RemoveStringToTheRightOfMarker(moveStr1, " ")
 			move = ParseMove(moveStr2, pos)
 			if move == NoMove {
 				continue
@@ -323,7 +321,7 @@ func ConsoleLoop(pos *Board, info *SearchInfo) {
 			SearchPosition(pos, info)
 		}
 
-		command, _ = inpututils.GetInput("\nHugo > ")
+		command, _ = GetInput("\nHugo > ")
 		if len(command) < 2 {
 			continue
 		}
@@ -361,7 +359,7 @@ func ConsoleLoop(pos *Board, info *SearchInfo) {
 		if strings.Contains(command, "setboard") {
 			engineSide = Both
 			startStr := "setboard "
-			fen := stringutils.RemoveStringToTheLeftOfMarker(command, startStr)
+			fen := RemoveStringToTheLeftOfMarker(command, startStr)
 			ParseFen(fen, pos)
 			continue
 		}
@@ -412,8 +410,8 @@ func ConsoleLoop(pos *Board, info *SearchInfo) {
 		}
 
 		if strings.Contains(command, "depth") {
-			depthStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "depth ")
-			depthStr2 := stringutils.RemoveStringToTheRightOfMarker(depthStr1, " ")
+			depthStr1 := RemoveStringToTheLeftOfMarker(command, "depth ")
+			depthStr2 := RemoveStringToTheRightOfMarker(depthStr1, " ")
 			depth, _ = strconv.Atoi(depthStr2)
 			if depth == 0 {
 				depth = MaxDepth
@@ -422,8 +420,8 @@ func ConsoleLoop(pos *Board, info *SearchInfo) {
 		}
 
 		if strings.Contains(command, "time") {
-			moveTimeStr1 := stringutils.RemoveStringToTheLeftOfMarker(command, "time ")
-			moveTimeStr2 := stringutils.RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
+			moveTimeStr1 := RemoveStringToTheLeftOfMarker(command, "time ")
+			moveTimeStr2 := RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
 			moveTime, _ = strconv.Atoi(moveTimeStr2)
 			moveTime *= 1000
 			continue

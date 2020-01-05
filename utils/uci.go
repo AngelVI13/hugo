@@ -2,8 +2,6 @@ package utils
 
 import (
 	"fmt"
-	inpututils "local/input-utils"
-	stringutils "local/string-utils"
 	"strconv"
 	"strings"
 	"time"
@@ -26,46 +24,46 @@ func ParseGo(line string, info *SearchInfo, pos *Board) {
 	}
 
 	if strings.Contains(line, "binc") && pos.side == Black {
-		incStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "binc ")
-		incStr2 := stringutils.RemoveStringToTheRightOfMarker(incStr1, " ")
+		incStr1 := RemoveStringToTheLeftOfMarker(line, "binc ")
+		incStr2 := RemoveStringToTheRightOfMarker(incStr1, " ")
 		inc, _ = strconv.Atoi(incStr2)
 	}
 
 	if strings.Contains(line, "winc") && pos.side == White {
-		incStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "winc ")
-		incStr2 := stringutils.RemoveStringToTheRightOfMarker(incStr1, " ")
+		incStr1 := RemoveStringToTheLeftOfMarker(line, "winc ")
+		incStr2 := RemoveStringToTheRightOfMarker(incStr1, " ")
 		inc, _ = strconv.Atoi(incStr2)
 	}
 
 	if strings.Contains(line, "wtime") && pos.side == White {
-		timeStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "wtime ")
-		timeStr2 := stringutils.RemoveStringToTheRightOfMarker(timeStr1, " ")
+		timeStr1 := RemoveStringToTheLeftOfMarker(line, "wtime ")
+		timeStr2 := RemoveStringToTheRightOfMarker(timeStr1, " ")
 		fmt.Println(timeStr1, "|", timeStr2)
 		timeInt, _ = strconv.Atoi(timeStr2)
 	}
 
 	if strings.Contains(line, "btime") && pos.side == Black {
-		timeStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "btime ")
-		timeStr2 := stringutils.RemoveStringToTheRightOfMarker(timeStr1, " ")
+		timeStr1 := RemoveStringToTheLeftOfMarker(line, "btime ")
+		timeStr2 := RemoveStringToTheRightOfMarker(timeStr1, " ")
 		timeInt, _ = strconv.Atoi(timeStr2)
 	}
 
 	if strings.Contains(line, "movestogo") {
-		movesToGoStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "movestogo ")
-		movesToGoStr2 := stringutils.RemoveStringToTheRightOfMarker(movesToGoStr1, " ")
+		movesToGoStr1 := RemoveStringToTheLeftOfMarker(line, "movestogo ")
+		movesToGoStr2 := RemoveStringToTheRightOfMarker(movesToGoStr1, " ")
 		fmt.Println(movesToGoStr1, "|", movesToGoStr2)
 		movesToGo, _ = strconv.Atoi(movesToGoStr2)
 	}
 
 	if strings.Contains(line, "movetime") {
-		moveTimeStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "movetime ")
-		moveTimeStr2 := stringutils.RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
+		moveTimeStr1 := RemoveStringToTheLeftOfMarker(line, "movetime ")
+		moveTimeStr2 := RemoveStringToTheRightOfMarker(moveTimeStr1, " ")
 		moveTime, _ = strconv.Atoi(moveTimeStr2)
 	}
 
 	if strings.Contains(line, "depth") {
-		depthStr1 := stringutils.RemoveStringToTheLeftOfMarker(line, "depth ")
-		depthStr2 := stringutils.RemoveStringToTheRightOfMarker(depthStr1, " ")
+		depthStr1 := RemoveStringToTheLeftOfMarker(line, "depth ")
+		depthStr2 := RemoveStringToTheRightOfMarker(depthStr1, " ")
 		depth, _ = strconv.Atoi(depthStr2)
 	}
 
@@ -104,7 +102,7 @@ func ParsePosition(lineIn string, pos *Board) {
 	} else {
 		if strings.Contains(lineIn, "fen") {
 			startStr := "fen "
-			fen := stringutils.RemoveStringToTheLeftOfMarker(lineIn, startStr)
+			fen := RemoveStringToTheLeftOfMarker(lineIn, startStr)
 			ParseFen(fen, pos)
 		} else {
 			ParseFen(StartFen, pos)
@@ -114,7 +112,7 @@ func ParsePosition(lineIn string, pos *Board) {
 	movesStr := "moves "
 	movesIdx := strings.Index(lineIn, movesStr)
 	if movesIdx != -1 {
-		fullMovesStr := stringutils.RemoveStringToTheLeftOfMarker(lineIn, movesStr)
+		fullMovesStr := RemoveStringToTheLeftOfMarker(lineIn, movesStr)
 		moveSlice := strings.Split(fullMovesStr, " ")
 		for i := range moveSlice {
 			move := ParseMove(moveSlice[i], pos)
@@ -141,10 +139,10 @@ func UciLoop(pos *Board, info *SearchInfo) {
 
 	line := ""
 
-	InitHashTable(&pos.HashTable)
+	// InitHashTable(&pos.HashTable)
 
 	for {
-		line, _ = inpututils.GetInput("")
+		line, _ = GetInput("")
 		if len(line) < 2 {
 			continue
 		}

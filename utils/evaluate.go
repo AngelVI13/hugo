@@ -1,9 +1,5 @@
 package utils
 
-import (
-	mathutils "local/math-utils"
-)
-
 // PawnTable pawn table
 var PawnTable = [64]int{
 	0, 0, 0, 0, 0, 0, 0, 0,
@@ -487,6 +483,14 @@ func MirrorBoard(pos *Board) {
 	// // AssertTrue(CheckBoard(pos))
 }
 
+// abs local method to compute absolute value of int without needing to convert to float
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
 // MaterialDraw Determines if given the available pieces the position is a material draw, based on sjeng
 func MaterialDraw(pos *Board) bool {
 	if pos.pieceNum[WhiteRook] == 0 && pos.pieceNum[BlackRook] == 0 && pos.pieceNum[WhiteQueen] == 0 && pos.pieceNum[BlackQueen] == 0 {
@@ -495,7 +499,7 @@ func MaterialDraw(pos *Board) bool {
 				return true
 			}
 		} else if pos.pieceNum[WhiteKnight] == 0 && pos.pieceNum[BlackKnight] == 0 {
-			if mathutils.Abs(pos.pieceNum[WhiteBishop]-pos.pieceNum[BlackBishop]) < 2 {
+			if abs(pos.pieceNum[WhiteBishop]-pos.pieceNum[BlackBishop]) < 2 {
 				return true
 			}
 		} else if (pos.pieceNum[WhiteKnight] < 3 && pos.pieceNum[WhiteBishop] == 0) || (pos.pieceNum[BlackBishop] == 1 && pos.pieceNum[WhiteKnight] == 0) {

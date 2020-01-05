@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	utils "local/hugo/utils"
-	inpututils "local/input-utils"
+	utils "hugo/utils"
 	"strings"
 )
 
@@ -56,7 +55,7 @@ func main() {
 	fmt.Printf("Welcome to Hugo! Type 'hugo' for console mode...\n")
 
 	for {
-		line, _ = inpututils.GetInput("")
+		line, _ = utils.GetInput("")
 		if len(line) < 2 {
 			continue
 		}

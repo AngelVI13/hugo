@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	mathutils "local/math-utils"
 	"time"
 )
 
@@ -267,7 +266,7 @@ func AlphaBeta(alpha, beta, depth int, pos *Board, info *SearchInfo, doNull bool
 		if info.stopped == true {
 			return 0
 		}
-		if score >= beta && mathutils.Abs(score) < IsMate {
+		if score >= beta && abs(score) < IsMate {
 			info.nullCut++
 			return beta
 		}
