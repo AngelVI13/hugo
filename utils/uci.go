@@ -123,7 +123,7 @@ func ParsePosition(lineIn string, pos *Board) {
 			pos.ply = 0
 		}
 	}
-	PrintBoard(pos)
+	// PrintBoard(pos)
 }
 
 const (

@@ -30,17 +30,17 @@ func InitEvaluationMasks() {
 	}
 
 	// set everything to 0
-	for sq := 0; sq < 64; sq++ {
+	for sq := 0; sq < InnerBoardSquareNum; sq++ {
 		IsolatedMask[sq] = 0
 		WhitePassedMask[sq] = 0
 		BlackPassedMask[sq] = 0
 		WhiteDoubledMask[sq] = 0
 	}
 
-	for sq := 0; sq < 64; sq++ {
+	for sq := 0; sq < InnerBoardSquareNum; sq++ {
 		targetSq := sq + 8
 
-		for targetSq < 64 {
+		for targetSq < InnerBoardSquareNum {
 			WhitePassedMask[sq] |= 1 << uint64(targetSq)
 			BlackDoubledMask[sq] |= 1 << uint64(targetSq)
 			targetSq += 8
@@ -53,11 +53,11 @@ func InitEvaluationMasks() {
 			targetSq -= 8
 		}
 
-		if FilesBoard[Sq120(sq)] > FileA {
-			IsolatedMask[sq] |= FileBBMask[FilesBoard[Sq120(sq)]-1]
+		if FilesBoard[Sq64ToSq120[sq]] > FileA {
+			IsolatedMask[sq] |= FileBBMask[FilesBoard[Sq64ToSq120[sq]]-1]
 
 			targetSq = sq + 7
-			for targetSq < 64 {
+			for targetSq < InnerBoardSquareNum {
 				WhitePassedMask[sq] |= 1 << uint64(targetSq)
 				targetSq += 8
 			}
@@ -69,11 +69,11 @@ func InitEvaluationMasks() {
 			}
 		}
 
-		if FilesBoard[Sq120(sq)] < FileH {
-			IsolatedMask[sq] |= FileBBMask[FilesBoard[Sq120(sq)]+1]
+		if FilesBoard[Sq64ToSq120[sq]] < FileH {
+			IsolatedMask[sq] |= FileBBMask[FilesBoard[Sq64ToSq120[sq]]+1]
 
 			targetSq = sq + 9
-			for targetSq < 64 {
+			for targetSq < InnerBoardSquareNum {
 				WhitePassedMask[sq] |= 1 << uint64(targetSq)
 				targetSq += 8
 			}
@@ -99,7 +99,7 @@ func InitSq120To64() {
 	}
 
 	// Set invalid values for all squares in 64Sq array
-	for index := 0; index < 64; index++ {
+	for index := 0; index < InnerBoardSquareNum; index++ {
 		Sq64ToSq120[index] = 120
 	}
 	// The above setup is later used for fail safe check that everything is set correctly
@@ -119,21 +119,21 @@ func InitSq120To64() {
 func InitBitMasks() {
 	// !!!!!
 	// consider removing this, the slice will already be initialized to 0
-	for index := 0; index < 64; index++ {
+	for index := 0; index < InnerBoardSquareNum; index++ {
 		SetMask[index] = 0
 		ClearMask[index] = 0
 	}
 
-	for index := 0; index < 64; index++ {
-		SetMask[index] |= (1 << uint64(index))
+	for index := 0; index < InnerBoardSquareNum; index++ {
+		SetMask[index] |= 1 << uint64(index)
 		ClearMask[index] = ^SetMask[index] // bitwise complement to SetMask
 	}
 }
 
 // InitHashKeys initializes hashkeys for all pieces and possible positions, for castling rights, for side to move
 func InitHashKeys() {
-	for i := 0; i < 13; i++ {
-		for j := 0; j < 120; j++ {
+	for i := 0; i < NumPieceTypes; i++ {
+		for j := 0; j < BoardSquareNum; j++ {
 			PieceKeys[i][j] = rand.Uint64() // returns a random 64 bit number
 		}
 	}

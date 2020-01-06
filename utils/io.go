@@ -98,8 +98,7 @@ func ParseMove(moveStr string, pos *Board) (move int) {
 	for moveNum := 0; moveNum < moveList.Count; moveNum++ {
 		move := moveList.Moves[moveNum].Move
 		if FromSq(move) == from && ToSq(move) == to {
-			promPiece := Promoted(move)
-			if promPiece != Empty {
+			if promPiece := Promoted(move); promPiece != Empty {
 				if IsPieceRookQueen[promPiece] && !IsPieceBishopQueen[promPiece] && moveStr[4] == "r"[0] {
 					return move
 				} else if !IsPieceRookQueen[promPiece] && IsPieceBishopQueen[promPiece] && moveStr[4] == "b"[0] {

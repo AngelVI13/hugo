@@ -55,7 +55,7 @@ func InitMvvLva() {
 
 // GetMoveInt creates and returns a move int from given move information
 func GetMoveInt(fromSq, toSq, capturePiece, promotionPiece, flag int) int {
-	return (fromSq | (toSq << 7) | (capturePiece << 14) | (promotionPiece << 20) | flag)
+	return fromSq | (toSq << 7) | (capturePiece << 14) | (promotionPiece << 20) | flag
 }
 
 // This already exists from validate.go

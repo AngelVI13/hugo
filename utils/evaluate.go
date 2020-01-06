@@ -2,86 +2,86 @@ package utils
 
 // PawnTable pawn table
 var PawnTable = [64]int{
-	0, 0, 0, 0, 0, 0, 0, 0,
-	10, 10, 0, -10, -10, 0, 10, 10,
-	5, 0, 0, 5, 5, 0, 0, 5,
-	0, 0, 10, 20, 20, 10, 0, 0,
-	5, 5, 5, 10, 10, 5, 5, 5,
-	10, 10, 10, 20, 20, 10, 10, 10,
-	20, 20, 20, 30, 30, 20, 20, 20,
-	0, 0, 0, 0, 0, 0, 0, 0,
+	0,  0,  0,   0,   0,  0,  0,  0,
+   10, 10,  0, -10, -10,  0, 10, 10,
+	5,  0,  0,   5,   5,  0,  0,  5,
+	0,  0, 10,  20,  20, 10,  0,  0,
+	5,  5,  5,  10,  10,  5,  5,  5,
+   10, 10, 10,  20,  20, 10, 10, 10,
+   20, 20, 20,  30,  30, 20, 20, 20,
+	0,  0,  0,   0,   0,  0,  0,  0,
 }
 
 // KnightTable knight table
 var KnightTable = [64]int{
-	0, -10, 0, 0, 0, 0, -10, 0,
-	0, 0, 0, 5, 5, 0, 0, 0,
-	0, 0, 10, 10, 10, 10, 0, 0,
-	0, 0, 10, 20, 20, 10, 0, 0,
-	5, 10, 15, 20, 20, 15, 10, 5,
-	5, 10, 10, 20, 20, 10, 10, 5,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0,
+   0, -10,  0,  0,  0, 0, -10,  0,
+   0,   0,  0,  5,  5,  0,  0,  0,
+   0,   0, 10, 10, 10, 10,  0,  0,
+   0,   0, 10, 20, 20, 10,  0,  0,
+   5,  10, 15, 20, 20, 15, 10,  5,
+   5,  10, 10, 20, 20, 10, 10,  5,
+   0,   0,  5, 10, 10,  5,  0,  0,
+   0,   0,  0,  0,  0,  0,  0,  0,
 }
 
 // BishopTable bishop table
 var BishopTable = [64]int{
-	0, 0, -10, 0, 0, -10, 0, 0,
-	0, 0, 0, 10, 10, 0, 0, 0,
-	0, 0, 10, 15, 15, 10, 0, 0,
-	0, 10, 15, 20, 20, 15, 10, 0,
-	0, 10, 15, 20, 20, 15, 10, 0,
-	0, 0, 10, 15, 15, 10, 0, 0,
-	0, 0, 0, 10, 10, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0,
+   0,  0, -10,  0,  0, -10,  0, 0,
+   0,  0,   0, 10, 10,   0,  0, 0,
+   0,  0,  10, 15, 15,  10,  0, 0,
+   0, 10,  15, 20, 20,  15, 10, 0,
+   0, 10,  15, 20, 20,  15, 10, 0,
+   0,  0,  10, 15, 15,  10,  0, 0,
+   0,  0,   0, 10, 10,   0,  0, 0,
+   0,  0,   0,  0,  0,   0,  0, 0,
 }
 
 // RookTable rook table
 var RookTable = [64]int{
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	0, 0, 5, 10, 10, 5, 0, 0,
-	25, 25, 25, 25, 25, 25, 25, 25,
-	0, 0, 5, 10, 10, 5, 0, 0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+	0,  0,  5, 10, 10,  5,  0,  0,
+   25, 25, 25, 25, 25, 25, 25, 25,
+	0,  0,  5, 10, 10,  5,  0,  0,
 }
 
 // KingE king endgame table
 var KingE = [64]int{
-	-50, -10, 0, 0, 0, 0, -10, -50,
-	-10, 0, 10, 10, 10, 10, 0, -10,
-	0, 10, 15, 15, 15, 15, 10, 0,
-	0, 10, 15, 20, 20, 15, 10, 0,
-	0, 10, 15, 20, 20, 15, 10, 0,
-	0, 10, 15, 15, 15, 15, 10, 0,
-	-10, 0, 10, 10, 10, 10, 0, -10,
-	-50, -10, 0, 0, 0, 0, -10, -50,
+   -50, -10,  0,  0,  0,  0, -10, -50,
+   -10,   0, 10, 10, 10, 10,   0, -10,
+	 0,  10, 15, 15, 15, 15,  10,   0,
+	 0,  10, 15, 20, 20, 15,  10,   0,
+	 0,  10, 15, 20, 20, 15,  10,   0,
+	 0,  10, 15, 15, 15, 15,  10,   0,
+   -10,   0, 10, 10, 10, 10,   0, -10,
+   -50, -10,  0,  0,  0,  0, -10, -50,
 }
 
 // KingO king opening/middle game table
 var KingO = [64]int{
-	0, 10, 10, -10, -10, 0, 20, 10,
-	-30, -30, -30, -30, -30, -30, -30, -30,
-	-50, -50, -50, -50, -50, -50, -50, -50,
-	-70, -70, -70, -70, -70, -70, -70, -70,
-	-70, -70, -70, -70, -70, -70, -70, -70,
-	-70, -70, -70, -70, -70, -70, -70, -70,
-	-70, -70, -70, -70, -70, -70, -70, -70,
-	-70, -70, -70, -70, -70, -70, -70, -70,
+	 0,  10,  10, -10, -10,   0,  20, 10,
+   -30, -30, -30, -30, -30, -30, -30, -30,
+   -50, -50, -50, -50, -50, -50, -50, -50,
+   -70, -70, -70, -70, -70, -70, -70, -70,
+   -70, -70, -70, -70, -70, -70, -70, -70,
+   -70, -70, -70, -70, -70, -70, -70, -70,
+   -70, -70, -70, -70, -70, -70, -70, -70,
+   -70, -70, -70, -70, -70, -70, -70, -70,
 }
 
 // Mirror64 slice that is used to get a mirror version of the tables for black's evaluation
 var Mirror64 = [64]int{
-	56, 57, 58, 59, 60, 61, 62, 63,
-	48, 49, 50, 51, 52, 53, 54, 55,
-	40, 41, 42, 43, 44, 45, 46, 47,
-	32, 33, 34, 35, 36, 37, 38, 39,
-	24, 25, 26, 27, 28, 29, 30, 31,
-	16, 17, 18, 19, 20, 21, 22, 23,
-	8, 9, 10, 11, 12, 13, 14, 15,
-	0, 1, 2, 3, 4, 5, 6, 7,
+   56, 57, 58, 59, 60, 61, 62, 63,
+   48, 49, 50, 51, 52, 53, 54, 55,
+   40, 41, 42, 43, 44, 45, 46, 47,
+   32, 33, 34, 35, 36, 37, 38, 39,
+   24, 25, 26, 27, 28, 29, 30, 31,
+   16, 17, 18, 19, 20, 21, 22, 23,
+	8,  9, 10, 11, 12, 13, 14, 15,
+	0,  1,  2,  3,  4,  5,  6,  7,
 }
 
 // PawnPassed passed pawn bonuses depending on how far down the board it is
@@ -127,13 +127,13 @@ func EvalPosition(pos *Board) int {
 		case BlackPawn:
 			evalBlackPawn(pos, sq, &score)
 		case WhiteKnight:
-			score += KnightTable[Sq64(sq)]
+			score += KnightTable[Sq120ToSq64[sq]]
 		case BlackKnight:
-			score -= KnightTable[Mirror64[Sq64(sq)]]
+			score -= KnightTable[Mirror64[Sq120ToSq64[sq]]]
 		case WhiteBishop:
-			score += BishopTable[Sq64(sq)]
+			score += BishopTable[Sq120ToSq64[sq]]
 		case BlackBishop:
-			score -= BishopTable[Mirror64[Sq64(sq)]]
+			score -= BishopTable[Mirror64[Sq120ToSq64[sq]]]
 		case WhiteRook:
 			evalWhiteRook(pos, sq, &score)
 		case BlackRook:
@@ -166,20 +166,20 @@ func EvalPosition(pos *Board) int {
 
 // evalWhitePawn evaluate white pawn at square (120 based)
 func evalWhitePawn(pos *Board, sq int, score *int) {
-	*score += PawnTable[Sq64(sq)]
+	*score += PawnTable[Sq120ToSq64[sq]]
 
 	// if there is no same colour pawn on a neighbouring square -> isolated pawn
-	if IsolatedMask[Sq64(sq)]&pos.Pawns[White] == 0 {
+	if IsolatedMask[Sq120ToSq64[sq]]&pos.Pawns[White] == 0 {
 		// fmt.Printf("WhitePawn Iso:%s\n", PrintSquare(sq))
 		*score += PawnIsolated
 	}
 
-	if WhitePassedMask[Sq64(sq)]&pos.Pawns[Black] == 0 {
+	if WhitePassedMask[Sq120ToSq64[sq]]&pos.Pawns[Black] == 0 {
 		// fmt.Printf("WhitePawn passed:%s\n", PrintSquare(sq))
 		*score += PawnPassed[RanksBoard[sq]]
 	}
 
-	if WhiteDoubledMask[Sq64(sq)]&pos.Pawns[White] != 0 {
+	if WhiteDoubledMask[Sq120ToSq64[sq]]&pos.Pawns[White] != 0 {
 		// fmt.Printf("WhitePawn doubled: %s\n", PrintSquare(sq))
 		*score += PawnDoubled
 	}
@@ -187,21 +187,21 @@ func evalWhitePawn(pos *Board, sq int, score *int) {
 
 // evalBlackPawn evaluate black pawn at square (120 based)
 func evalBlackPawn(pos *Board, sq int, score *int) {
-	*score -= PawnTable[Mirror64[Sq64(sq)]]
+	*score -= PawnTable[Mirror64[Sq120ToSq64[sq]]]
 
 	// if there is no same colour pawn on a neighbouring square -> isolated pawn
-	if IsolatedMask[Sq64(sq)]&pos.Pawns[Black] == 0 {
+	if IsolatedMask[Sq120ToSq64[sq]]&pos.Pawns[Black] == 0 {
 		// fmt.Printf("BlackPawn Iso:%s\n", PrintSquare(sq))
 		*score -= PawnIsolated
 	}
 
 	// if there are no opposite color pawns in front or to the side of the black pawn -> passed pawn
-	if BlackPassedMask[Sq64(sq)]&pos.Pawns[White] == 0 {
+	if BlackPassedMask[Sq120ToSq64[sq]]&pos.Pawns[White] == 0 {
 		// fmt.Printf("BlackPawn passed:%s\n", PrintSquare(sq))
 		*score -= PawnPassed[7-RanksBoard[sq]] // need to subtract from 7 since black pawns go down the rank from 7->0
 	}
 
-	if BlackDoubledMask[Sq64(sq)]&pos.Pawns[Black] != 0 {
+	if BlackDoubledMask[Sq120ToSq64[sq]]&pos.Pawns[Black] != 0 {
 		// fmt.Printf("BlackPawn doubled: %s\n", PrintSquare(sq))
 		*score -= PawnDoubled
 	}
@@ -209,7 +209,7 @@ func evalBlackPawn(pos *Board, sq int, score *int) {
 
 // evalWhiteRook evaluate white rook at square (120 based)
 func evalWhiteRook(pos *Board, sq int, score *int) {
-	*score += RookTable[Sq64(sq)]
+	*score += RookTable[Sq120ToSq64[sq]]
 
 	if (pos.Pawns[Both] & FileBBMask[FilesBoard[sq]]) == 0 {
 		*score += RookOpenFile
@@ -221,7 +221,7 @@ func evalWhiteRook(pos *Board, sq int, score *int) {
 
 // evalBlackRook evaluate black rook at square (120 based)
 func evalBlackRook(pos *Board, sq int, score *int) {
-	*score -= RookTable[Mirror64[Sq64(sq)]]
+	*score -= RookTable[Mirror64[Sq120ToSq64[sq]]]
 
 	if (pos.Pawns[Both] & FileBBMask[FilesBoard[sq]]) == 0 {
 		*score -= RookOpenFile
@@ -255,9 +255,9 @@ func evalBlackQueen(pos *Board, sq int, score *int) {
 func evalWhiteKing(pos *Board, sq int, score *int) {
 	// if we are in the endgame add endgame king square score
 	if pos.material[Black] <= EndGameMaterial {
-		*score += KingE[Sq64(sq)]
+		*score += KingE[Sq120ToSq64[sq]]
 	} else {
-		*score += KingO[Sq64(sq)]
+		*score += KingO[Sq120ToSq64[sq]]
 		*score += evalWhiteKingSafety(pos)
 	}
 }
@@ -265,9 +265,9 @@ func evalWhiteKing(pos *Board, sq int, score *int) {
 // evalBlackKing evaluate white king at square (120 based)
 func evalBlackKing(pos *Board, sq int, score *int) {
 	if pos.material[White] <= EndGameMaterial {
-		*score -= KingE[Mirror64[Sq64(sq)]]
+		*score -= KingE[Mirror64[Sq120ToSq64[sq]]]
 	} else {
-		*score -= KingO[Mirror64[Sq64(sq)]]
+		*score -= KingO[Mirror64[Sq120ToSq64[sq]]]
 		*score -= evalBlackKingSafety(pos)
 	}
 }
@@ -320,14 +320,14 @@ func evalWhiteKingPawn(pos *Board, pawn int) int {
 	safetyScore := 0
 
 	// if pawn hasnt moved
-	if (pos.Pawns[White] & (1 << uint64(Sq64(pawn)))) != 0 {
+	if (pos.Pawns[White] & (1 << uint64(Sq120ToSq64[pawn]))) != 0 {
 		// everything is okay
 		// fmt.Printf("White king pawn hasnt moved (%s)\n", PrintSquare(pawn))
-	} else if (pos.Pawns[White] & (1 << uint64(Sq64(pawn+10)))) != 0 {
+	} else if (pos.Pawns[White] & (1 << uint64(Sq120ToSq64[pawn+10]))) != 0 {
 		// if pawn moved one square forward add -10
 		// fmt.Printf("White king pawn moved one square forward (%s)\n", PrintSquare(pawn+10))
 		safetyScore -= 10
-	} else if (pos.Pawns[White] & BlackDoubledMask[Sq64(pawn)]) != 0 {
+	} else if (pos.Pawns[White] & BlackDoubledMask[Sq120ToSq64[pawn]]) != 0 {
 		// pawn moved more than one square
 		// fmt.Printf("White king pawn moved more than one square forward (%s)\n", PrintSquare(pawn))
 		safetyScore -= 20
@@ -338,11 +338,11 @@ func evalWhiteKingPawn(pos *Board, pawn int) int {
 	}
 
 	//check for opposing pawns close to the white king pawns
-	if (pos.Pawns[Black] & (1 << uint64(Sq64(pawn+10)))) != 0 {
+	if (pos.Pawns[Black] & (1 << uint64(Sq120ToSq64[pawn+10]))) != 0 {
 		// enemy pawn on the 3rd rank
 		// fmt.Printf("Enemy pawn on 3rd rank (%s)\n", PrintSquare(pawn+10))
 		safetyScore -= 10
-	} else if (pos.Pawns[Black] & (1 << uint64(Sq64(pawn+20)))) != 0 {
+	} else if (pos.Pawns[Black] & (1 << uint64(Sq120ToSq64[pawn+20]))) != 0 {
 		// enemy pawn on the 4th rank
 		// fmt.Printf("Enemy pawn on 4th rank (%s)\n", PrintSquare(pawn+20))
 		safetyScore -= 5
@@ -400,14 +400,14 @@ func evalBlackKingPawn(pos *Board, pawn int) int {
 	safetyScore := 0
 
 	// if pawn hasnt moved
-	if (pos.Pawns[Black] & (1 << uint64(Sq64(pawn)))) != 0 {
+	if (pos.Pawns[Black] & (1 << uint64(Sq120ToSq64[pawn]))) != 0 {
 		// everything is okay
 		// fmt.Printf("Black king pawn hasnt moved (%s)\n", PrintSquare(pawn))
-	} else if (pos.Pawns[Black] & (1 << uint64(Sq64(pawn-10)))) != 0 {
+	} else if (pos.Pawns[Black] & (1 << uint64(Sq120ToSq64[pawn-10]))) != 0 {
 		// if pawn moved one square forward add -10
 		// fmt.Printf("Black king pawn moved one square forward (%s)\n", PrintSquare(pawn-10))
 		safetyScore -= 10
-	} else if (pos.Pawns[Black] & WhiteDoubledMask[Sq64(pawn)]) != 0 {
+	} else if (pos.Pawns[Black] & WhiteDoubledMask[Sq120ToSq64[pawn]]) != 0 {
 		// pawn moved more than one square
 		// fmt.Printf("Black king pawn moved more than one square forward (%s)\n", PrintSquare(pawn))
 		safetyScore -= 20
@@ -418,11 +418,11 @@ func evalBlackKingPawn(pos *Board, pawn int) int {
 	}
 
 	//check for opposing pawns close to the white king pawns
-	if (pos.Pawns[White] & (1 << uint64(Sq64(pawn-10)))) != 0 {
+	if (pos.Pawns[White] & (1 << uint64(Sq120ToSq64[pawn-10]))) != 0 {
 		// enemy pawn on the 3rd rank
 		// fmt.Printf("Enemy pawn on 3rd rank (%s)\n", PrintSquare(pawn-10))
 		safetyScore -= 10
-	} else if (pos.Pawns[White] & (1 << uint64(Sq64(pawn-20)))) != 0 {
+	} else if (pos.Pawns[White] & (1 << uint64(Sq120ToSq64[pawn-20]))) != 0 {
 		// enemy pawn on the 4th rank
 		// fmt.Printf("Enemy pawn on 4th rank (%s)\n", PrintSquare(pawn-20))
 		safetyScore -= 5
@@ -456,11 +456,11 @@ func MirrorBoard(pos *Board) {
 	}
 
 	if pos.enPas != NoSquare {
-		tempEnPassant = Sq120(Mirror64[Sq64(pos.enPas)])
+		tempEnPassant = Sq64ToSq120[Mirror64[Sq120ToSq64[pos.enPas]]]
 	}
 
 	for sq := 0; sq < 64; sq++ {
-		tempPiecesSlice[sq] = pos.Pieces[Sq120(Mirror64[sq])]
+		tempPiecesSlice[sq] = pos.Pieces[Sq64ToSq120[Mirror64[sq]]]
 	}
 
 	// clear board
@@ -469,7 +469,7 @@ func MirrorBoard(pos *Board) {
 	// write mirrored information to all relevant arrays
 	for sq := 0; sq < 64; sq++ {
 		tempPiece := swapPiece[tempPiecesSlice[sq]]
-		pos.Pieces[Sq120(sq)] = tempPiece
+		pos.Pieces[Sq64ToSq120[sq]] = tempPiece
 	}
 
 	pos.side = tempSide

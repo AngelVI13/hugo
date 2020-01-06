@@ -35,7 +35,7 @@ func PrintBitBoard(bb uint64) {
 	for rank := Rank8; rank >= Rank1; rank-- {
 		for file := FileA; file <= FileH; file++ {
 			sq := FileRankToSquare(file, rank) // 120 based index
-			sq64 := Sq64(sq)                   // get 64 based index
+			sq64 := Sq120ToSq64[sq]  // get 64 based index
 
 			// check if position has a value of 1 and print X
 			if (shiftMe<<uint64(sq64))&bb != 0 {

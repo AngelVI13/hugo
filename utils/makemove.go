@@ -35,7 +35,7 @@ var CastlePerm = [BoardSquareNum]int{
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
-	15, 7, 15, 15, 15, 3, 15, 15, 11, 15,
+	15,  7, 15, 15, 15,  3, 15, 15, 11, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 }
@@ -66,8 +66,8 @@ func clearPiece(sq int, pos *Board) {
 		}
 	} else {
 		// if piece is a pawn, remove it from the board of same coloured pawns and also from board of both coloured pawns
-		ClearBit(&pos.Pawns[colour], Sq64(sq))
-		ClearBit(&pos.Pawns[Both], Sq64(sq))
+		ClearBit(&pos.Pawns[colour], Sq120ToSq64[sq])
+		ClearBit(&pos.Pawns[Both], Sq120ToSq64[sq])
 	}
 
 	/*
@@ -127,8 +127,8 @@ func addPiece(sq, pce int, pos *Board) {
 			pos.minorPieceNum[colour]++
 		}
 	} else {
-		SetBit(&pos.Pawns[colour], Sq64(sq))
-		SetBit(&pos.Pawns[Both], Sq64(sq))
+		SetBit(&pos.Pawns[colour], Sq120ToSq64[sq])
+		SetBit(&pos.Pawns[Both], Sq120ToSq64[sq])
 	}
 
 	pos.material[colour] += PieceVal[pce]
@@ -152,10 +152,10 @@ func movePiece(from, to int, pos *Board) {
 	pos.Pieces[to] = pce
 
 	if !PieceBig[pce] {
-		ClearBit(&pos.Pawns[colour], Sq64(from))
-		ClearBit(&pos.Pawns[Both], Sq64(from))
-		SetBit(&pos.Pawns[colour], Sq64(to))
-		SetBit(&pos.Pawns[Both], Sq64(to))
+		ClearBit(&pos.Pawns[colour], Sq120ToSq64[from])
+		ClearBit(&pos.Pawns[Both], Sq120ToSq64[from])
+		SetBit(&pos.Pawns[colour], Sq120ToSq64[to])
+		SetBit(&pos.Pawns[Both], Sq120ToSq64[to])
 	}
 
 	// Update the square value for the given piece

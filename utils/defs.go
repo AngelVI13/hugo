@@ -7,6 +7,8 @@ const (
 	Name = "Hugo 1.0"
 	// BoardSquareNum is the total number of squares in the board representation
 	BoardSquareNum = 120
+	// InnerBoardSquareNum is the number of squares in a standard chess board excluding any padding added
+	InnerBoardSquareNum = 64
 	// BookFile book filename
 	BookFile = "utils/book.txt"
 )
@@ -156,6 +158,8 @@ const (
 const (
 	// MaxGameMoves maximum number halfmoves allowed
 	MaxGameMoves int = 2048
+	// NumPieceTypes number of all the piece types including EMPTY (white pawn, black bishop etc.)
+	NumPieceTypes int = 13
 )
 
 // Undo struct
@@ -179,7 +183,7 @@ type Board struct {
 	histPly       int                // how many half moves have been made
 	castlePerm    int                // castle permissions
 	posKey        uint64             // position key is a unique key stored for each position (used to keep track of 3fold repetition)
-	pieceNum      [13]int            // how many pieces of each type are there currently on the board
+	pieceNum      [NumPieceTypes]int            // how many pieces of each type are there currently on the board
 	bigPieceNum   [2]int             // number of big pieces on the board (anything thats not a pawn) for each colour and for both
 	majorPieceNum [2]int             // number of major pieces on the board (rooks and queens) for each colour and for both
 	minorPieceNum [2]int             // number of minor pieces on the board (bishops and knights) for each colour and for both
@@ -187,11 +191,11 @@ type Board struct {
 	history       [MaxGameMoves]Undo // array that stores current position and variables before a move is made
 	// pieceList contains the squares of all pieces on the board, this makes it faster to iterate and generate moves for (instead of iterating over pieces slice (too big))
 	// 13 is the total number of pieces for white and black combined, 10 is the maximum possible number of each piece to occur in a game
-	pieceList [13][10]int
+	pieceList [NumPieceTypes][10]int
 	HashTable HashTable // principle variation table
 	PvArray   [MaxDepth]int
 
-	searchHistory [13][BoardSquareNum]int // everytime a search improves alpha, for that piece type and to square, we will improve the score
+	searchHistory [NumPieceTypes][BoardSquareNum]int // everytime a search improves alpha, for that piece type and to square, we will improve the score
 	searchKillers [2][MaxDepth]int        // stores 2 moves that have recently stored a beta cutoff (not considers captures)
 }
 
@@ -199,32 +203,18 @@ type Board struct {
 var Sq120ToSq64 [BoardSquareNum]int
 
 // Sq64ToSq120 would return the index of 64 mapped to a 120 square board
-var Sq64ToSq120 [64]int
+var Sq64ToSq120 [InnerBoardSquareNum]int
 
 // FileRankToSquare converts give file and rank to a square index
 func FileRankToSquare(file, rank int) (square int) {
-	return ((21 + file) + (rank * 10))
+	return (21 + file) + (rank * 10)
 }
-
-// !!!!!!!!! Consider Removing these because the add extra overhead
-
-// Sq64 returns the element at sq120 base
-func Sq64(sq120 int) int {
-	return Sq120ToSq64[sq120]
-}
-
-// Sq120 returns the element at sq64 base
-func Sq120(sq64 int) int {
-	return Sq64ToSq120[sq64]
-}
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // SetMask is used when setting a bit to 1 or 0
-var SetMask [64]uint64
+var SetMask [InnerBoardSquareNum]uint64
 
 // ClearMask is used to clear a bit
-var ClearMask [64]uint64
+var ClearMask [InnerBoardSquareNum]uint64
 
 // ClearBit takes a bitboard and clears the bit at a provided square
 func ClearBit(bb *uint64, sq int) {
@@ -237,7 +227,7 @@ func SetBit(bb *uint64, sq int) {
 }
 
 // PieceKeys hashkeys for each piece for each possible position for the key
-var PieceKeys [13][120]uint64
+var PieceKeys [NumPieceTypes][BoardSquareNum]uint64
 
 // SideKey the hashkey associated with the current side
 var SideKey uint64
@@ -276,22 +266,6 @@ var FileNotationMap = map[string]int{
 	"f": FileF,
 	"g": FileG,
 	"h": FileH,
-}
-
-// PieceCharMap maps piece notations (i.e. 'p', 'N') to piece values (i.e. 'BlackPawn', 'WhiteKnight')
-var PieceCharMap = map[int]string{
-	BlackPawn:   "p",
-	BlackRook:   "r",
-	BlackKnight: "n",
-	BlackBishop: "b",
-	BlackKing:   "k",
-	BlackQueen:  "q",
-	WhitePawn:   "P",
-	WhiteRook:   "R",
-	WhiteKnight: "N",
-	WhiteBishop: "B",
-	WhiteKing:   "K",
-	WhiteQueen:  "Q",
 }
 
 // FilesBoard an array that returns which file a particular square is on
@@ -445,16 +419,16 @@ var FileBBMask [8]uint64
 var RankBBMask [8]uint64
 
 // BlackPassedMask black passed pawn mask
-var BlackPassedMask [64]uint64
+var BlackPassedMask [InnerBoardSquareNum]uint64
 
 // WhitePassedMask white passed pawn mask
-var WhitePassedMask [64]uint64
+var WhitePassedMask [InnerBoardSquareNum]uint64
 
 // IsolatedMask isolated pawn mask
-var IsolatedMask [64]uint64
+var IsolatedMask [InnerBoardSquareNum]uint64
 
 // WhiteDoubledMask isolated pawn mask
-var WhiteDoubledMask [64]uint64
+var WhiteDoubledMask [InnerBoardSquareNum]uint64
 
 // BlackDoubledMask isolated pawn mask
-var BlackDoubledMask [64]uint64
+var BlackDoubledMask [InnerBoardSquareNum]uint64

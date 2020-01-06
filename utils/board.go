@@ -13,12 +13,12 @@ func ResetBoard(pos *Board) {
 	}
 
 	// Set all real board positions to Empty
-	for i := 0; i < 64; i++ {
-		pos.Pieces[Sq120(i)] = Empty
+	for i := 0; i < InnerBoardSquareNum; i++ {
+		pos.Pieces[Sq64ToSq120[i]] = Empty
 	}
 
 	// Reset number of big pieces, major pieces, minor pieces and pawns
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 2; i++ {  // todo add var for magic number
 		pos.bigPieceNum[i] = 0
 		pos.majorPieceNum[i] = 0
 		pos.minorPieceNum[i] = 0
@@ -26,12 +26,12 @@ func ResetBoard(pos *Board) {
 	}
 
 	// The pawns slice contains information for White,Black & Both
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 3; i++ {  // todo add var for magic number
 		pos.Pawns[i] = 0
 	}
 
 	// Reset piece number
-	for i := 0; i < 13; i++ {
+	for i := 0; i < NumPieceTypes; i++ {
 		pos.pieceNum[i] = 0
 	}
 
@@ -52,7 +52,7 @@ func ResetBoard(pos *Board) {
 
 // ParseFen parse fen position string and setup a position accordingly
 // !!! FIX ERROR HANDLING, now it simply returns a non-zero int whenever there is an error
-func ParseFen(fen string, pos *Board) int {
+func ParseFen(fen string, pos *Board) {
 	// // AssertTrue(fen != "")
 	// // AssertTrue(pos != nil)
 
@@ -84,15 +84,14 @@ func ParseFen(fen string, pos *Board) int {
 			char++
 			continue
 		default:
-			fmt.Println("FEN error")
-			return -1
+			panic("FEN error")
 		}
 
 		// This loop, skips over all empty positions in a rank
 		// When it comes to a piece that is different that "1"-"8" it places it on the corresponding square
 		for i := 0; i < count; i++ {
 			sq64 = rank*8 + file
-			sq120 = Sq120(sq64)
+			sq120 = Sq64ToSq120[sq64]
 			if piece != Empty {
 				pos.Pieces[sq120] = piece
 			}
@@ -157,8 +156,6 @@ func ParseFen(fen string, pos *Board) int {
 	pos.posKey = GeneratePosKey(pos) // generate pos key for new position
 
 	UpdateListsMaterial(pos)
-
-	return 0
 }
 
 // PrintBoard prints board for a given position
@@ -239,11 +236,11 @@ func UpdateListsMaterial(pos *Board) {
 
 			// If we have a pawn, set the bit corresponding to the board position of the pawn in the related pawn bitboard
 			if piece == WhitePawn {
-				SetBit(&pos.Pawns[White], Sq64(index))
-				SetBit(&pos.Pawns[Both], Sq64(index))
+				SetBit(&pos.Pawns[White], Sq120ToSq64[index])
+				SetBit(&pos.Pawns[Both], Sq120ToSq64[index])
 			} else if piece == BlackPawn {
-				SetBit(&pos.Pawns[Black], Sq64(index))
-				SetBit(&pos.Pawns[Both], Sq64(index))
+				SetBit(&pos.Pawns[Black], Sq120ToSq64[index])
+				SetBit(&pos.Pawns[Both], Sq120ToSq64[index])
 			}
 		}
 	}

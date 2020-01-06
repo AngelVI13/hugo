@@ -6,12 +6,6 @@ var PieceChar = ".PNBRQKpnbrqk"
 // SideChar string with side characters
 var SideChar = "wb-"
 
-// RankChar string with rank characters
-var RankChar = "12345678"
-
-// FileChar string with file characters
-var FileChar = "abcdefgh"
-
 // PieceBig A map used to identify if a piece is considered "Big"
 var PieceBig = map[int]bool{
 	Empty:       false,
@@ -179,23 +173,6 @@ var IsPiecePawn = map[int]bool{
 	BlackBishop: false,
 	BlackRook:   false,
 	BlackQueen:  false,
-	BlackKing:   false,
-}
-
-// PieceSlides holds information if a given piece slides
-var PieceSlides = map[int]bool{
-	Empty:       false,
-	WhitePawn:   false,
-	WhiteKnight: false,
-	WhiteBishop: true,
-	WhiteRook:   true,
-	WhiteQueen:  true,
-	WhiteKing:   false,
-	BlackPawn:   false,
-	BlackKnight: false,
-	BlackBishop: true,
-	BlackRook:   true,
-	BlackQueen:  true,
 	BlackKing:   false,
 }
 
