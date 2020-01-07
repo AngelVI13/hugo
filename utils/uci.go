@@ -146,6 +146,8 @@ func UciLoop(pos *Board, info *SearchInfo) {
 		if len(line) < 2 {
 			continue
 		}
+		// Remove leading and trailinig whitespaces
+		line = strings.Trim(line, " ")
 
 		if strings.Contains(line, "isready") {
 			fmt.Println("readyok")

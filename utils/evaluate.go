@@ -1,6 +1,7 @@
 package utils
 
 // PawnTable pawn table
+// todo Convert all tables to 120-index based in order to remove unnecessary conversion between 120 -> 64 -> 120
 var PawnTable = [64]int{
 	0,  0,  0,   0,   0,  0,  0,  0,
    10, 10,  0, -10, -10,  0, 10, 10,
