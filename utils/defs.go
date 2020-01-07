@@ -10,7 +10,8 @@ const (
 	// InnerBoardSquareNum is the number of squares in a standard chess board excluding any padding added
 	InnerBoardSquareNum = 64
 	// BookFile book filename
-	BookFile = "utils/book.txt"
+	// Todo take this as input parameter instead
+	BookFile = "C:/Users/angel.iliev/go/src/hugo/utils/book.txt"
 )
 
 //

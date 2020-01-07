@@ -292,6 +292,7 @@ func AlphaBeta(alpha, beta, depth int, pos *Board, info *SearchInfo, doNull bool
 	}
 
 	for moveNum := 0; moveNum < moveList.Count; moveNum++ {
+		// todo investigate sorting the whole movelist instead of finding the best move and returning it
 		PickNextMove(moveNum, &moveList)
 
 		if !MakeMove(pos, moveList.Moves[moveNum].Move) {
