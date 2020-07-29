@@ -72,7 +72,7 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 		if info.stopped == true {
 			break
 		}
-
+		// fmt.Println("Inside loop")
 		pvMoves := GetPvLine(pos, currentDepth)
 		bestMove = pos.PvArray[0]
 
@@ -95,6 +95,11 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 			fmt.Println()
 			// fmt.Printf("Ordering: %.2f\n", info.failHighFirst/info.failHigh)
 		}
+	}
+
+	if bestMove == NoMove {
+		// fmt.Println(pos.PvArray)
+		bestMove = pos.PvArray[0]
 	}
 
 	PerformMove(pos, info, bestMove)

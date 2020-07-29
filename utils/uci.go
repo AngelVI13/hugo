@@ -79,7 +79,11 @@ func ParseGo(line string, info *SearchInfo, pos *Board) {
 		info.TimeSet = true
 		timeInt /= movesToGo
 		// to be on the safe side we remove 50ms from this value
-		timeInt -= 50
+		timeInt -= 100 // todo add a flag that this is changed to 100 when playing over internet
+		if timeInt < 100 {  // we might end up with negative or very small time
+			timeInt = 100
+		}
+
 		stopTimeInSeconds := (timeInt + inc) // find stop time in miliseconds
 		info.StopTime = stopTimeInSeconds
 	}
@@ -148,6 +152,8 @@ func UciLoop(pos *Board, info *SearchInfo) {
 		}
 		// Remove leading and trailinig whitespaces
 		line = strings.Trim(line, " ")
+
+		fmt.Printf("REQ: %s\n", line)
 
 		if strings.Contains(line, "isready") {
 			fmt.Println("readyok")
