@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"fmt"
 	"strconv"
 	"strings"
@@ -38,7 +39,7 @@ func ParseGo(line string, info *SearchInfo, pos *Board) {
 	if strings.Contains(line, "wtime") && pos.side == White {
 		timeStr1 := RemoveStringToTheLeftOfMarker(line, "wtime ")
 		timeStr2 := RemoveStringToTheRightOfMarker(timeStr1, " ")
-		fmt.Println(timeStr1, "|", timeStr2)
+		// fmt.Println(timeStr1, "|", timeStr2)
 		timeInt, _ = strconv.Atoi(timeStr2)
 	}
 
@@ -51,7 +52,7 @@ func ParseGo(line string, info *SearchInfo, pos *Board) {
 	if strings.Contains(line, "movestogo") {
 		movesToGoStr1 := RemoveStringToTheLeftOfMarker(line, "movestogo ")
 		movesToGoStr2 := RemoveStringToTheRightOfMarker(movesToGoStr1, " ")
-		fmt.Println(movesToGoStr1, "|", movesToGoStr2)
+		// fmt.Println(movesToGoStr1, "|", movesToGoStr2)
 		movesToGo, _ = strconv.Atoi(movesToGoStr2)
 	}
 
@@ -93,6 +94,8 @@ func ParseGo(line string, info *SearchInfo, pos *Board) {
 	}
 
 	fmt.Printf("time:%d start:%s stop:%d depth:%d timeset:%t\n", timeInt, info.StartTime, info.StopTime,
+		info.Depth, info.TimeSet)
+	log.Printf("time:%d start:%s stop:%d depth:%d timeset:%t\n", timeInt, info.StartTime, info.StopTime,
 		info.Depth, info.TimeSet)
 
 	SearchPosition(pos, info)
@@ -138,8 +141,16 @@ const (
 // UciLoop main UCI loop
 func UciLoop(pos *Board, info *SearchInfo) {
 	fmt.Printf("id name %s\n", Name)
+	log.Printf("id name %s\n", Name)
+
 	fmt.Printf("id author AngelVI\n")
+	log.Printf("id author AngelVI\n")
+	
+	fmt.Println()
+	log.Println()
+
 	fmt.Println("uciok")
+	log.Println("uciok")
 
 	line := ""
 
@@ -147,16 +158,17 @@ func UciLoop(pos *Board, info *SearchInfo) {
 
 	for {
 		line, _ = GetInput("")
+		log.Printf("REQ: %s\n", line)
+		
 		if len(line) < 2 {
 			continue
 		}
 		// Remove leading and trailinig whitespaces
 		line = strings.Trim(line, " ")
 
-		fmt.Printf("REQ: %s\n", line)
-
 		if strings.Contains(line, "isready") {
 			fmt.Println("readyok")
+			log.Println("readyok")
 			continue
 		} else if strings.Contains(line, "position") {
 			ParsePosition(line, pos)
@@ -169,8 +181,16 @@ func UciLoop(pos *Board, info *SearchInfo) {
 			break
 		} else if strings.Contains(line, "uci") {
 			fmt.Printf("id name %s\n", Name)
+			log.Printf("id name %s\n", Name)
+			
 			fmt.Printf("id author AngelVI\n")
+			log.Printf("id author AngelVI\n")
+			
 			fmt.Println("uciok")
+			log.Println("uciok")
+		} else if strings.Contains(line, "setoption") {
+			fmt.Println("readyok")
+			log.Println("readyok")
 		}
 
 		if info.Quit {

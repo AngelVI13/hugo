@@ -1,6 +1,9 @@
 package main
 
 import (
+	"flag"
+	"os"
+	"log"
 	"fmt"
 	utils "hugo/utils"
 	"strings"
@@ -45,6 +48,22 @@ func showSqAtBySide(side int, pos *utils.Board) {
 }
 
 func main() {
+	// setup & process cli args
+	flag.StringVar(&utils.BookFile, "book", "", "Path to book file.")
+	logPtr := flag.String("log", "logs.txt", "Log file path")
+	flag.Parse()
+
+	// fmt.Println(utils.BookFile)
+
+	// setup logging to file
+	file, err := os.OpenFile(*logPtr, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    log.SetOutput(file)
+
+	// Initialize components
 	utils.AllInit()
 
 	var board utils.Board
@@ -53,9 +72,12 @@ func main() {
 
 	line := ""
 	fmt.Printf("Welcome to Hugo! Type 'hugo' for console mode...\n")
+	log.Printf("Welcome to Hugo! Type 'hugo' for console mode...\n")
 
 	for {
 		line, _ = utils.GetInput("")
+		log.Printf("GOT INPUT: %s\n", line)
+
 		if len(line) < 2 {
 			continue
 		}

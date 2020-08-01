@@ -11,8 +11,10 @@ const (
 	InnerBoardSquareNum = 64
 	// BookFile book filename
 	// Todo take this as input parameter instead
-	BookFile = "C:/Users/angel.iliev/go/src/hugo/utils/book.txt"
 )
+
+// path to book file
+var BookFile string
 
 //
 

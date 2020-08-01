@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"fmt"
 	"time"
 )
@@ -79,20 +80,26 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 		moveTime := int64(time.Since(info.StartTime).Seconds() * 1000) // the UCI protocol expects milliseconds
 		if info.GameMode == UciMode {
 			fmt.Printf("info score cp %d depth %d nodes %d time %d ", bestScore, currentDepth, info.nodes, moveTime)
+			log.Printf("info score cp %d depth %d nodes %d time %d ", bestScore, currentDepth, info.nodes, moveTime)
 		} else if info.GameMode == XBoardMode && info.PostThinking == true {
 			moveTime *= 10
 			fmt.Printf("%d %d %d %d", currentDepth, bestScore, moveTime, info.nodes)
+			log.Printf("%d %d %d %d", currentDepth, bestScore, moveTime, info.nodes)
 		} else if info.PostThinking == true {
 			fmt.Printf("score:%d depth:%d nodes:%d time:%d(ms)", bestScore, currentDepth, info.nodes, moveTime)
+			log.Printf("score:%d depth:%d nodes:%d time:%d(ms)", bestScore, currentDepth, info.nodes, moveTime)
 		}
 		if info.GameMode == UciMode || info.PostThinking == true {
 			// Print the principle variation
 			pvMoves = GetPvLine(pos, currentDepth)
 			fmt.Printf("pv")
+			log.Printf("pv")
 			for pvNum := 0; pvNum < pvMoves; pvNum++ {
 				fmt.Printf(" %s", PrintMove(pos.PvArray[pvNum]))
+				log.Printf(" %s", PrintMove(pos.PvArray[pvNum]))
 			}
 			fmt.Println()
+			log.Println()
 			// fmt.Printf("Ordering: %.2f\n", info.failHighFirst/info.failHigh)
 		}
 	}
@@ -111,11 +118,14 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 func PerformMove(pos *Board, info *SearchInfo, bestMove int) {
 	if info.GameMode == UciMode {
 		fmt.Printf("bestmove %s\n", PrintMove(bestMove))
+		log.Printf("bestmove %s\n", PrintMove(bestMove))
 	} else if info.GameMode == XBoardMode {
 		fmt.Printf("move %s\n", PrintMove(bestMove))
+		log.Printf("move %s\n", PrintMove(bestMove))
 		MakeMove(pos, bestMove)
 	} else {
 		fmt.Printf("\n\n***!! Hugo makes move %s !!***\n\n", PrintMove(bestMove))
+		log.Printf("\n\n***!! Hugo makes move %s !!***\n\n", PrintMove(bestMove))
 		MakeMove(pos, bestMove)
 		PrintBoard(pos)
 	}

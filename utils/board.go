@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"fmt"
 	"strconv"
 )
@@ -161,24 +162,33 @@ func ParseFen(fen string, pos *Board) {
 // PrintBoard prints board for a given position
 func PrintBoard(pos *Board) {
 	fmt.Printf("\nGame Board:\n\n")
+	log.Printf("\nGame Board:\n\n")
 
 	for rank := Rank8; rank >= Rank1; rank-- {
 		fmt.Printf("%d  ", rank+1)
+		log.Printf("%d  ", rank+1)
 		for file := FileA; file <= FileH; file++ {
 			sq := FileRankToSquare(file, rank)
 			piece := pos.Pieces[sq]
 			fmt.Printf("%3c", PieceChar[piece])
+			log.Printf("%3c", PieceChar[piece])
 		}
 		fmt.Printf("\n")
+		log.Printf("\n")
 	}
 
 	fmt.Printf("\n   ")
+	log.Printf("\n   ")
 	for file := FileA; file <= FileH; file++ {
 		fmt.Printf("%3c", 'a'+file)
+		log.Printf("%3c", 'a'+file)
 	}
 	fmt.Printf("\n")
+	log.Printf("\n")
 	fmt.Printf("side:%c\n", SideChar[pos.side])
+	log.Printf("side:%c\n", SideChar[pos.side])
 	fmt.Printf("enPas:%d\n", pos.enPas)
+	log.Printf("enPas:%d\n", pos.enPas)
 
 	// Compute castling permissions
 	wKCA := "-"
@@ -202,7 +212,9 @@ func PrintBoard(pos *Board) {
 	}
 
 	fmt.Printf("castle:%s%s%s%s\n", wKCA, wQCA, bKCA, bQCA)
+	log.Printf("castle:%s%s%s%s\n", wKCA, wQCA, bKCA, bQCA)
 	fmt.Printf("PosKey:%X\n", pos.posKey)
+	log.Printf("PosKey:%X\n", pos.posKey)
 }
 
 // UpdateListsMaterial updates all material related piece lists
