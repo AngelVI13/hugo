@@ -10,7 +10,7 @@ const (
 )
 
 // InitHashTable initializes pv table
-func InitHashTable(table *HashTable) {
+func InitHashTable(table *TranspositionTable) {
 	// given a const size, and the size of the pEntry struct, compute how many entries can fit into the given PvSize
 	// -> create a slice of PVEntries with that size
 	table.numEntries = HashSize
@@ -20,7 +20,7 @@ func InitHashTable(table *HashTable) {
 }
 
 // ClearHashTable clears a given pvtable
-func ClearHashTable(table *HashTable) {
+func ClearHashTable(table *TranspositionTable) {
 	for hashEntry := range table.pTable {
 		table.pTable[hashEntry].posKey = 0
 		table.pTable[hashEntry].move = NoMove
@@ -33,19 +33,13 @@ func ClearHashTable(table *HashTable) {
 // StoreHashEntry store a principle variation move
 func StoreHashEntry(pos *Board, move, score, flags, depth int) {
 	// this returns a number between 0 and numentries - 1
-	index := int(pos.posKey % uint64(pos.HashTable.numEntries))
+	index := int(pos.posKey % uint64(HashTable.numEntries))
 
-	// AssertTrue(index >= 0 && index <= pos.HashTable.numEntries-1)
+	// AssertTrue(index >= 0 && index <= HashTable.numEntries-1)
 	// AssertTrue(depth >= 1 && depth < MaxDepth)
 	// AssertTrue(flags >= HFAlpha && flags <= HFExact)
 	// AssertTrue(score >= -Infinite && score <= Infinite)
 	// AssertTrue(pos.ply >= 0 && pos.ply < MaxDepth)
-
-	if pos.HashTable.pTable[index].posKey == 0 {
-		pos.HashTable.newWrite++
-	} else {
-		pos.HashTable.overWrite++
-	}
 
 	if score > IsMate {
 		score += pos.ply
@@ -53,41 +47,40 @@ func StoreHashEntry(pos *Board, move, score, flags, depth int) {
 		score -= pos.ply
 	}
 
-	pos.HashTable.pTable[index].move = move
-	pos.HashTable.pTable[index].posKey = pos.posKey
-	pos.HashTable.pTable[index].flags = flags
-	pos.HashTable.pTable[index].score = score
-	pos.HashTable.pTable[index].depth = depth
+	HashTable.pTable[index].move = move
+	HashTable.pTable[index].posKey = pos.posKey
+	HashTable.pTable[index].flags = flags
+	HashTable.pTable[index].score = score
+	HashTable.pTable[index].depth = depth
 }
 
 // ProbeHashEntry probe pv table. Return the principle variation move for a given position from the PV table
 func ProbeHashEntry(pos *Board, move, score *int, alpha, beta, depth int) bool {
 	// this returns a number between 0 and numentries - 1
-	index := int(pos.posKey % uint64(pos.HashTable.numEntries))
+	index := int(pos.posKey % uint64(HashTable.numEntries))
 
-	// AssertTrue(index >= 0 && index <= pos.HashTable.numEntries-1)
+	// AssertTrue(index >= 0 && index <= HashTable.numEntries-1)
 	// AssertTrue(depth >= 1 && depth < MaxDepth)
 	// AssertTrue(alpha < beta)
 	// AssertTrue(alpha >= -Infinite && alpha <= Infinite)
 	// AssertTrue(beta >= -Infinite && beta <= Infinite)
 	// AssertTrue(pos.ply >= 0 && pos.ply < MaxDepth)
 
-	if pos.HashTable.pTable[index].posKey == pos.posKey {
-		*move = pos.HashTable.pTable[index].move
-		if pos.HashTable.pTable[index].depth >= depth {
-			pos.HashTable.hit++
+	if HashTable.pTable[index].posKey == pos.posKey {
+		*move = HashTable.pTable[index].move
+		if HashTable.pTable[index].depth >= depth {
 
-			// AssertTrue(pos.HashTable.pTable[index].depth >= 1 && pos.HashTable.pTable[index].depth < MaxDepth)
-			// AssertTrue(pos.HashTable.pTable[index].flags >= HFAlpha && pos.HashTable.pTable[index].flags <= HFExact)
+			// AssertTrue(HashTable.pTable[index].depth >= 1 && HashTable.pTable[index].depth < MaxDepth)
+			// AssertTrue(HashTable.pTable[index].flags >= HFAlpha && HashTable.pTable[index].flags <= HFExact)
 
-			*score = pos.HashTable.pTable[index].score
+			*score = HashTable.pTable[index].score
 			if *score > IsMate {
 				*score -= pos.ply
 			} else if *score < -IsMate {
 				*score += pos.ply
 			}
 
-			switch pos.HashTable.pTable[index].flags {
+			switch HashTable.pTable[index].flags {
 			case HFAlpha:
 				if *score <= alpha {
 					*score = alpha
@@ -137,12 +130,12 @@ func GetPvLine(pos *Board, depth int) int {
 
 // ProbePvMove probe for a pv move
 func ProbePvMove(pos *Board) int {
-	index := int(pos.posKey % uint64(pos.HashTable.numEntries))
+	index := int(pos.posKey % uint64(HashTable.numEntries))
 
 	// AssertTrue(index >= 0 && index <= uint64(pos.HashTable.numEntries-1))
 
-	if pos.HashTable.pTable[index].posKey == pos.posKey {
-		return pos.HashTable.pTable[index].move
+	if HashTable.pTable[index].posKey == pos.posKey {
+		return HashTable.pTable[index].move
 	}
 
 	return NoMove

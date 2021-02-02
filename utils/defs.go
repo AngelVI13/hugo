@@ -195,12 +195,14 @@ type Board struct {
 	// pieceList contains the squares of all pieces on the board, this makes it faster to iterate and generate moves for (instead of iterating over pieces slice (too big))
 	// 13 is the total number of pieces for white and black combined, 10 is the maximum possible number of each piece to occur in a game
 	pieceList [NumPieceTypes][10]int
-	HashTable HashTable // principle variation table
 	PvArray   [MaxDepth]int
 
 	searchHistory [NumPieceTypes][BoardSquareNum]int // everytime a search improves alpha, for that piece type and to square, we will improve the score
 	searchKillers [2][MaxDepth]int        // stores 2 moves that have recently stored a beta cutoff (not considers captures)
 }
+
+// Create global TranspositionTable for easy acccess over multiple threads
+var HashTable TranspositionTable // principle variation table
 
 // Sq120ToSq64 would return the index of 120 mapped to a 64 square board
 var Sq120ToSq64 [BoardSquareNum]int
@@ -355,14 +357,10 @@ type HashEntry struct {
 	flags  int
 }
 
-// HashTable principle variation table
-type HashTable struct {
+// TranspositionTable principle variation table
+type TranspositionTable struct {
 	pTable     []HashEntry // you can make an array instead but this allows for dynamically allocating space as you go along
 	numEntries int
-	newWrite   int
-	overWrite  int
-	hit        int
-	cut        int
 }
 
 // Hash entry flags
@@ -403,6 +401,7 @@ type SearchInfo struct {
 
 	GameMode     int  // see consts below
 	PostThinking bool // if true, engine posts its thinking to the gui
+	IsMainThread bool // flag to indicate if this search info is associated with the main thread
 }
 
 // Game Modes

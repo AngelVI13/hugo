@@ -60,11 +60,26 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 		PerformMove(pos, info, bestMove)
 		return 0
 	}
-
-	// do normal move search
-	bestMove = NoMove
-	bestScore := -Infinite
 	ClearForSearch(pos, info)
+
+	// todo copy pos & info and start a few threads with a pointers to the copies
+
+	bestMove = IterativeSearch(pos, info)
+
+	// todo this is only here for debugging
+	if bestMove == NoMove {
+		panic("No bestMove after IterativeSearch!")
+	}
+
+	PerformMove(pos, info, bestMove)
+
+	return 0
+}
+
+func IterativeSearch(pos *Board, info *SearchInfo) int {
+	// do normal move search
+	bestMove := NoMove
+	bestScore := -Infinite
 
 	for currentDepth := 1; currentDepth <= info.Depth; currentDepth++ {
 		//                    *alpha     *beta
@@ -75,7 +90,6 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 		}
 		// fmt.Println("Inside loop")
 		pvMoves := GetPvLine(pos, currentDepth)
-		bestMove = pos.PvArray[0]
 
 		moveTime := int64(time.Since(info.StartTime).Seconds() * 1000) // the UCI protocol expects milliseconds
 		if info.GameMode == UciMode {
@@ -104,14 +118,9 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 		}
 	}
 
-	if bestMove == NoMove {
-		// fmt.Println(pos.PvArray)
-		bestMove = pos.PvArray[0]
-	}
+	bestMove = pos.PvArray[0]
+	return bestMove
 
-	PerformMove(pos, info, bestMove)
-
-	return 0
 }
 
 // PerformMove performs the best found move from search or book
@@ -145,9 +154,7 @@ func ClearForSearch(pos *Board, info *SearchInfo) {
 		}
 	}
 
-	pos.HashTable.overWrite = 0
-	pos.HashTable.hit = 0
-	pos.HashTable.cut = 0
+	
 
 	pos.ply = 0
 	info.stopped = false
@@ -265,7 +272,6 @@ func AlphaBeta(alpha, beta, depth int, pos *Board, info *SearchInfo, doNull bool
 	pvMove := NoMove
 
 	if ProbeHashEntry(pos, &pvMove, &score, alpha, beta, depth) == true {
-		pos.HashTable.cut++
 		return score
 	}
 
