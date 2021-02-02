@@ -4,6 +4,8 @@ import (
 	"log"
 	"fmt"
 	"time"
+	"sync"
+	// "github.com/jinzhu/copier"
 )
 
 const (
@@ -62,9 +64,28 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 	}
 	ClearForSearch(pos, info)
 
-	// todo copy pos & info and start a few threads with a pointers to the copies
+	// Create waitgroup to manage goroutines
+	var wg sync.WaitGroup
 
+	for i := 0; i < 4; i++ {
+		wg.Add(1)
+
+		// copy pos & info
+		pos_copy := *pos
+		info_copy := *info
+
+        go func() { 
+        	IterativeSearch(&pos_copy, &info_copy)
+        	wg.Done()
+        }()
+	}
+
+	info.IsMainThread = true
 	bestMove = IterativeSearch(pos, info)
+
+	// Wait for all goroutines to finish. We are not interested in their output
+	// We only run them in order to faster populate the HashTable
+	wg.Wait()
 
 	// todo this is only here for debugging
 	if bestMove == NoMove {
@@ -88,8 +109,14 @@ func IterativeSearch(pos *Board, info *SearchInfo) int {
 		if info.stopped == true {
 			break
 		}
+
 		// fmt.Println("Inside loop")
 		pvMoves := GetPvLine(pos, currentDepth)
+
+		// we only print info on our main thread
+		if !info.IsMainThread {
+			continue
+		}
 
 		moveTime := int64(time.Since(info.StartTime).Seconds() * 1000) // the UCI protocol expects milliseconds
 		if info.GameMode == UciMode {
@@ -118,6 +145,12 @@ func IterativeSearch(pos *Board, info *SearchInfo) int {
 		}
 	}
 
+	// todo should we call GetPvLine here again
+	// What should currentDepth be here ?
+	// if info.IsMainThread == true {
+	// 	// GetPvLine updates pos.PvArray values => call it here to get the latest info
+	// 	GetPvLine(pos, currentDepth)
+	// }
 	bestMove = pos.PvArray[0]
 	return bestMove
 
