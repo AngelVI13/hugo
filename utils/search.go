@@ -194,6 +194,7 @@ func ClearForSearch(pos *Board, info *SearchInfo) {
 	info.nodes = 0
 	info.failHigh = 0
 	info.failHighFirst = 0
+	info.IsMainThread = false
 }
 
 // Quiescence searches untill a quiet position in order to eliminate the horizon effect
