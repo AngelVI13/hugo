@@ -106,12 +106,12 @@ func IterativeSearch(pos *Board, info *SearchInfo) int {
 		//                    *alpha     *beta
 		bestScore = AlphaBeta(-Infinite, Infinite, currentDepth, pos, info, true)
 
+		// make sure to update PV line info into the current board object
+		pvMoves := GetPvLine(pos, currentDepth)
+		
 		if info.stopped == true {
 			break
 		}
-
-		// fmt.Println("Inside loop")
-		pvMoves := GetPvLine(pos, currentDepth)
 
 		// we only print info on our main thread
 		if !info.IsMainThread {
@@ -145,12 +145,6 @@ func IterativeSearch(pos *Board, info *SearchInfo) int {
 		}
 	}
 
-	// todo should we call GetPvLine here again
-	// What should currentDepth be here ?
-	// if info.IsMainThread == true {
-	// 	// GetPvLine updates pos.PvArray values => call it here to get the latest info
-	// 	GetPvLine(pos, currentDepth)
-	// }
 	bestMove = pos.PvArray[0]
 	return bestMove
 
