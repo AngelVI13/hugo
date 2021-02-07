@@ -55,6 +55,7 @@ func SearchPosition(pos *Board, info *SearchInfo) int {
 	// the principle variation or the potentially good moves and in this
 	// way when you search again with more depth you can easily eliminate
 	// a lot of bad nodes automatically
+	// todo good test position for deep mate: 8/8/2K5/4b3/3k4/5Q2/6p1/8 w - - 0 6
 
 	// if we can perform a book move, do that first, otherwise perform search
 	bestMove := GetBookMove(pos)
